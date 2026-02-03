@@ -22,7 +22,7 @@ const KanbanDashboard = () => {
     const fetchProjects = async () => {
         setLoading(true);
         const { data, error } = await supabase
-            .from('proyectos')
+            .from('kanban')
             .select('*');
 
         if (error) console.error('Error cargando proyectos:', error);
@@ -33,7 +33,7 @@ const KanbanDashboard = () => {
     // 2. Actualizar estado (Cambiar de columna)
     const handleMoveStatus = async (id, newStatus) => {
         const { error } = await supabase
-            .from('proyectos')
+            .from('kanban')
             .update({ status: newStatus })
             .eq('id', id);
 
