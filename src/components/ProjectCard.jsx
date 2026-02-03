@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/kanban.css';
+import '../styles/global.css'
 
 const ProjectCard = ({ project, onClick }) => {
     // Función para dar formato a moneda

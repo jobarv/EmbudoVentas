@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/modal.css';
+import '../styles/global.css';
 
 const ProjectModal = ({ project, onClose, onUpdateStatus, COLUMNS }) => {
     if (!project) return null;

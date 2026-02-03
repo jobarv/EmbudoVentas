@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import './Kanban.css';
+import '../styles/global.css';
 
 // Supabase
 const supabaseUrl = 'https://tu-proyecto.supabase.co';
