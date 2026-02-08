@@ -2,7 +2,7 @@
    VARIABLES Y RESET
    ========================================= */
 :root {
-  --bg-main: #f0f2f5;
+  --bg-main: #0d28bf;
   --column-bg: #ebedef;
   --card-bg: #ffffff;
   --primary: #0052cc;
@@ -233,35 +233,55 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--bg-main);
+  padding: 20px;
 }
 
-.login-form {
+.login-box {
+  display: flex;
+  width: 100%;
+  max-width: 850px;
   background: white;
-  padding: 40px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  width: 100%;
-  max-width: 400px;
+  overflow: hidden; /* Importante para los bordes redondeados */
 }
 
-.login-form h2 {
-  margin-bottom: 20px;
+/* Sección izquierda (Logo/Branding) */
+.login-branding {
+  flex: 1;
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
   text-align: center;
 }
 
-.login-form input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.logo-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
 }
 
-.login-buttons {
+/* Sección derecha (Formulario) */
+.login-form {
+  flex: 1;
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
+  justify-content: center;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+  .login-box {
+    flex-direction: column;
+    max-width: 400px;
+  }
+  .login-branding {
+    padding: 20px;
+  }
 }

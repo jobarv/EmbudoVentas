@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
+import logo from '../assets/Logo MOTIONTECH_letrasBlancas.png'
 import '../styles/global.css';
 
 const Login = () => {
@@ -24,10 +25,18 @@ const Login = () => {
     };
 
     return (
-        <>
-            <div className="login-container">
-                <form className="login-form">
-                    <h2>Gestor Kanban - Acceso</h2>
+        <div className="login-container">
+            <div className="login-box">
+                <div className="login-branding">
+                    <div className="logo-placeholder">
+                        <img src={logo} alt="logo_motiontech" />
+                        <h1>Kanban Pro</h1>
+                        <p>Organiza tu flujo de trabajo de forma eficiente.</p>
+                    </div>
+                </div>
+
+                <form className="login-form" onSubmit={handleLogin}>
+                    <h2>Acceso</h2>
                     <div className="modal-field">
                         <label>Correo Electrónico</label>
                         <input
@@ -35,6 +44,7 @@ const Login = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="tu@email.com"
+                            required
                         />
                     </div>
                     <div className="modal-field">
@@ -44,19 +54,20 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="******"
+                            required
                         />
                     </div>
                     <div className="login-buttons">
-                        <button onClick={handleLogin} disabled={loading} className="add-project-btn">
+                        <button type="submit" disabled={loading} className="add-project-btn">
                             {loading ? 'Cargando...' : 'Entrar'}
                         </button>
-                        <button onClick={handleSignUp} className="link-btn">
+                        <button type="button" onClick={handleSignUp} className="link-btn">
                             Registrarse
                         </button>
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     );
 };
 
