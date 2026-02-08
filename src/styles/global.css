@@ -167,6 +167,7 @@ body {
   border: none;
   font-size: 2rem;
   cursor: pointer;
+  color: black;
 }
 
 .modal-scroll-area {

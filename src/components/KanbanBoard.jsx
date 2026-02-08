@@ -7,7 +7,7 @@ const supabaseUrl = 'https://tu-proyecto.supabase.co';
 const supabaseAnonKey = 'tu-api-key-anonima';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const COLUMNS = ["prospectos", "cliente potencial", "negociación", "cierre", "perdido"];
+const COLUMNS = ["prospectos", "cliente potencial", "negociacion", "cierre", "perdido"];
 
 const KanbanDashboard = () => {
     const [projects, setProjects] = useState([]);
@@ -60,7 +60,7 @@ const KanbanDashboard = () => {
                                     >
                                         <div className="card-title">{project.project_name}</div>
                                         <div className="card-company">{project.company}</div>
-                                        <div className="card-value">${Number(project.value).toLocaleString()}</div>
+                                        <div className="card-value">${Number(project.quantity).toLocaleString()}</div>
                                         <div className="card-footer">
                                             <span>👤 {project.lead_owner_name || 'Sin asignar'}</span>
                                         </div>
@@ -97,7 +97,7 @@ const KanbanDashboard = () => {
                                     </div>
                                     <div className="info-item">
                                         <label>Monto Cotizado</label>
-                                        <p className="highlight-price">${Number(selectedProject.value).toLocaleString()}</p>
+                                        <p className="highlight-price">${Number(selectedProject.quantity).toLocaleString()}</p>
                                     </div>
                                 </div>
 

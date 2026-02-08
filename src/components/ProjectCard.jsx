@@ -20,7 +20,7 @@ const ProjectCard = ({ project, onClick }) => {
 
                 <div className="card-details">
                     <p className="card-client">👤 {project.client_name}</p>
-                    <p className="card-value">{formatCurrency(project.value)}</p>
+                    <p className="card-value">{formatCurrency(project.quantity)}</p>
                 </div>
 
                 <div className="card-footer">

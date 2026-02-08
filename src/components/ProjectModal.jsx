@@ -43,7 +43,7 @@ const ProjectModal = ({ project, onClose, onUpdateStatus, COLUMNS }) => {
 
                         <section className="modal-section">
                             <label>Valor de la Oferta</label>
-                            <p className="price-tag">${Number(project.value).toLocaleString()}</p>
+                            <p className="price-tag">${Number(project.quantity).toLocaleString()}</p>
                         </section>
 
                         <section className="modal-section">
