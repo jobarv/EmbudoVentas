@@ -1,85 +1,183 @@
-import React from 'react';
-import '../styles/global.css';
+import React, { useEffect, useState } from "react";
 
-const ProjectModal = ({ project, onClose, onUpdateStatus, COLUMNS }) => {
-    if (!project) return null;
+const ProjectModal = ({
+  project,
+  onClose,
+  onSave,
+  onMoveStatus,
+  COLUMNS = []
 
-    return (
-        <>
-            <div className="modal-overlay" onClick={onClose}>
-                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                    <div className="modal-header">
-                        <button className="close-btn" onClick={onClose}>&times;</button>
-                        <h2>Detalles del Proyecto</h2>
-                    </div>
+}) => {
+  const [formData, setFormData] = useState(project || {});
+  const [isEditing, setIsEditing] = useState(false);
+  const handleOverlayClick = () => {
+    if (isEditing) {
+      onSave?.(formData);
+    }
+    onClose();
+  };
+  // Sincroniza cuando cambia el proyecto seleccionado
+  useEffect(() => {
+    setFormData(project || {});
+    setIsEditing(false);
+  }, [project]);
 
-                    <div className="modal-scroll-area">
-                        <section className="modal-section">
-                            <label>Nombre del Proyecto</label>
-                            <h3>{project.project_name}</h3>
-                        </section>
+  const updateField = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
-                        <section className="modal-section grid-2">
-                            <div>
-                                <label>Cliente</label>
-                                <p>{project.client_name}</p>
-                            </div>
-                            <div>
-                                <label>Empresa</label>
-                                <p>{project.company}</p>
-                            </div>
-                        </section>
+  const handleSave = () => {
+    onSave?.(formData);
+    setIsEditing(false);
+  };
 
-                        <section className="modal-section grid-2">
-                            <div>
-                                <label>Teléfono</label>
-                                <p>{project.phone || 'No registrado'}</p>
-                            </div>
-                            <div>
-                                <label>Email</label>
-                                <p>{project.email || 'No registrado'}</p>
-                            </div>
-                        </section>
+  const handleCancelEdit = () => {
+    setFormData(project || {});
+    setIsEditing(false);
+  };
 
-                        <section className="modal-section">
-                            <label>Valor de la Oferta</label>
-                            <p className="price-tag">${Number(project.quantity).toLocaleString()}</p>
-                        </section>
+  if (!project) return null;
 
-                        <section className="modal-section">
-                            <label>Información General</label>
-                            <p className="description-text">{project.general_info || 'Sin descripción adicional.'}</p>
-                        </section>
+  return (
+    <div className="modal-overlay" onClick={handleOverlayClick}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
 
-                        <section className="modal-section links">
-                            <label>Documentación y Ubicación</label>
-                            <a href={project.gdrive_url} target="_blank" rel="noreferrer" className="link-btn">
-                                📂 Abrir Cotización (GDrive)
-                            </a>
-                            <a href={project.gmaps_url} target="_blank" rel="noreferrer" className="link-btn maps">
-                                📍 Ver Ubicación (Maps)
-                            </a>
-                        </section>
+        <div className="modal-header">
+          <h2>Detalle del Proyecto</h2>
+          <button className="close-btn" onClick={onClose}>×</button>
+        </div>
 
-                        <section className="modal-section status-update">
-                            <label>Dueño del Lead: <strong>{project.lead_owner}</strong></label>
-                            <div className="selector-wrapper">
-                                <label>Mover a Etapa:</label>
-                                <select
-                                    value={project.status}
-                                    onChange={(e) => onUpdateStatus(project.id, e.target.value)}
-                                >
-                                    {COLUMNS.map(col => (
-                                        <option key={col} value={col}>{col.toUpperCase()}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+        <div className="modal-body">
+
+          <label>Proyecto</label>
+          <input
+            disabled={!isEditing}
+            value={formData.project_name || ""}
+            onChange={(e) => updateField("project_name", e.target.value)}
+          />
+
+          <label>Empresa</label>
+          <input
+            disabled={!isEditing}
+            value={formData.company || ""}
+            onChange={(e) => updateField("company", e.target.value)}
+          />
+
+          <label>Cliente</label>
+          <input
+            disabled={!isEditing}
+            value={formData.client_name || ""}
+            onChange={(e) => updateField("client_name", e.target.value)}
+          />
+
+          <label>Teléfono</label>
+          <input
+            disabled={!isEditing}
+            value={formData.phone || ""}
+            onChange={(e) => updateField("phone", e.target.value)}
+          />
+
+          <label>Email</label>
+          <input
+            disabled={!isEditing}
+            value={formData.email || ""}
+            onChange={(e) => updateField("email", e.target.value)}
+          />
+
+          <label>Monto</label>
+          <input
+            disabled={!isEditing}
+            type="number"
+            value={formData.quantity ?? 0}
+            onChange={(e) => updateField("quantity", Number(e.target.value))}
+          />
+
+          <label>Información General</label>
+          <textarea
+            disabled={!isEditing}
+            value={formData.general_info || ""}
+            onChange={(e) => updateField("general_info", e.target.value)}
+          />
+
+          <label>GDrive URL</label>
+          <input
+            disabled={!isEditing}
+            value={formData.gdrive_url || ""}
+            onChange={(e) => updateField("gdrive_url", e.target.value)}
+          />
+
+          <label>Google Maps URL</label>
+          <input
+            disabled={!isEditing}
+            value={formData.gmaps_url || ""}
+            onChange={(e) => updateField("gmaps_url", e.target.value)}
+          />
+
+          <label>Dueño del Lead</label>
+          <input
+            disabled={!isEditing}
+            value={formData.lead_owner_name || ""}
+            onChange={(e) => updateField("lead_owner_name", e.target.value)}
+          />
+
+          <div className="status-changer">
+            <label>Etapa</label>
+            <select
+              disabled={!isEditing}
+              value={formData.status || ""}
+              onChange={async (e) => {
+                const newStatus = e.target.value;
+                updateField("status", newStatus);
+
+                if (formData.id) {
+                  await onMoveStatus(formData.id, newStatus);
+                }
+              }}
+            >
+              {COLUMNS.map(c => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ marginTop: 20, display: "flex", gap: 10 }}>
+
+            {!isEditing && (
+              <button
+                className="add-project-btn"
+                onClick={() => setIsEditing(true)}
+              >
+                ✏️ Editar
+              </button>
+            )}
+
+            {isEditing && (
+              <>
+                <button
+                  className="add-project-btn"
+                  onClick={handleSave}
+                >
+                  💾 Guardar cambios
+                </button>
+
+                <button
+                  className="link-btn"
+                  onClick={handleCancelEdit}
+                >
+                  Cancelar edición
+                </button>
+              </>
+            )}
+
+            <button className="link-btn" onClick={onClose}>
+              Cerrar
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ProjectModal;

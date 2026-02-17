@@ -32,13 +32,30 @@ function App() {
     setLoading(false);
   };
 
-  const handleUpdateStatus = async (id, newStatus) => {
-    const { error } = await supabase.from('kanban').update({ status: newStatus }).eq('id', id);
+
+  if (!session) return <Login />;
+
+  const handleMoveStatus = async (id, newStatus) => {
+    const { error } = await supabase
+      .from('kanban')
+      .update({ status: newStatus })
+      .eq('id', id);
+
+    if (!error) fetchProjects();
+  };
+
+  const handleUpdateProject = async (updatedProject) => {
+    const { id, ...fields } = updatedProject;
+
+    const { error } = await supabase
+      .from('kanban')
+      .update(fields)
+      .eq('id', id);
+
     if (!error) fetchProjects();
     setSelectedProject(null);
   };
 
-  if (!session) return <Login />;
 
   return (
     <div className="app-layout">
@@ -63,22 +80,26 @@ function App() {
           </div>
         ))}
       </div>
-
+      
       {/* MODAL DETALLE */}
+
       {selectedProject && (
-        <ProjectModal 
-          project={selectedProject} 
-          onClose={() => setSelectedProject(null)} 
-          onUpdateStatus={handleUpdateStatus} 
-          COLUMNS={COLUMNS} 
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+          onSave={handleUpdateProject}
+          onMoveStatus={handleMoveStatus}
+          COLUMNS={COLUMNS}
         />
       )}
 
+
+
       {/* FORMULARIO NUEVO PROYECTO */}
       {showNewForm && (
-        <NewProjectForm 
-          onClose={() => setShowNewForm(false)} 
-          onRefresh={fetchProjects} 
+        <NewProjectForm
+          onClose={() => setShowNewForm(false)}
+          onRefresh={fetchProjects}
         />
       )}
     </div>

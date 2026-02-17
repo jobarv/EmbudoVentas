@@ -11,7 +11,7 @@
   --text-light: #5e6c84;
   --success: #28a745;
   --danger: #dc3545;
-  --shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   --border-radius: 8px;
 }
 
@@ -143,15 +143,20 @@ body {
   width: 100%;
   max-width: 500px;
   height: 100%;
-  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   animation: slideIn 0.3s ease-out;
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .modal-header {
@@ -229,6 +234,7 @@ select {
   border: 1px solid #ccc;
   margin-top: 10px;
 }
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -245,7 +251,8 @@ select {
   background: white;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
-  overflow: hidden; /* Importante para los bordes redondeados */
+  overflow: hidden;
+  /* Importante para los bordes redondeados */
 }
 
 /* Sección izquierda (Logo/Branding) */
@@ -275,12 +282,133 @@ select {
   justify-content: center;
 }
 
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1
+  }
+}
+
+/* ===== FORM ===== */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-body label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+/* ===== INPUT BASE ===== */
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: all 0.15s ease;
+  background: #f9fafb;
+}
+
+/* ===== SOLO LECTURA ===== */
+.modal-body input:disabled,
+.modal-body textarea:disabled,
+.modal-body select:disabled {
+  border: none;
+  background: #f3f4f6;
+  color: #111827;
+  font-weight: 500;
+  padding-left: 0;
+  cursor: default;
+}
+
+/* ===== MODO EDICIÓN ===== */
+.modal-body input:not(:disabled),
+.modal-body textarea:not(:disabled),
+.modal-body select:not(:disabled) {
+  background: white;
+  border: 1px solid #d1d5db;
+}
+
+.modal-body input:not(:disabled):focus,
+.modal-body textarea:not(:disabled):focus,
+.modal-body select:not(:disabled):focus {
+  outline: none;
+  border: 1px solid #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ===== BOTONES ===== */
+.add-project-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-project-btn:hover {
+  background: #1d4ed8;
+}
+
+.link-btn {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+
 /* Ajuste para móviles */
 @media (max-width: 768px) {
   .login-box {
     flex-direction: column;
     max-width: 400px;
   }
+
   .login-branding {
     padding: 20px;
   }
