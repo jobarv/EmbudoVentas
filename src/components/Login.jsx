@@ -32,7 +32,7 @@ const Login = () => {
                         <div className="logo-placeholder">
                             <img src={logo} alt="logo_motiontech" />
                             <h1>Kanban Pro</h1>
-                            <p>Organiza tu flujo de trabajo de forma eficiente.</p>
+                            <p>Productividad y Tecnología en Movimiento</p>
                         </div>
                     </div>
 

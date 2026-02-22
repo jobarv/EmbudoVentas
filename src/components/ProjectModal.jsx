@@ -38,6 +38,19 @@ const ProjectModal = ({
 
   if (!project) return null;
 
+  const getEmbedMapUrl = (url) => {
+    if (!url) return "";
+
+    const coords = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (coords) {
+      return `https://maps.google.com/maps?q=${coords[1]},${coords[2]}&z=15&output=embed`;
+    }
+
+    return `https://maps.google.com/maps?q=${encodeURIComponent(url)}&output=embed`;
+  };
+
+
+
   return (
     <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -100,18 +113,56 @@ const ProjectModal = ({
           />
 
           <label>GDrive URL</label>
-          <input
-            disabled={!isEditing}
-            value={formData.gdrive_url || ""}
-            onChange={(e) => updateField("gdrive_url", e.target.value)}
-          />
+          <div style={{ display: "flex", gap: 10 }}>
+            <input
+              style={{ flex: 1 }}
+              disabled={!isEditing}
+              value={formData.gdrive_url || ""}
+              onChange={(e) => updateField("gdrive_url", e.target.value)}
+            />
 
-          <label>Google Maps URL</label>
+            {formData.gdrive_url && (
+              <button
+                className="link-btn"
+                onClick={() => window.open(formData.gdrive_url, "_blank")}
+              >
+                Abrir
+              </button>
+            )}
+          </div>
+
+
+          <label>Google Maps</label>
+
+          {formData.gmaps_url && (
+            <div style={{ marginBottom: 10 }}>
+              <iframe
+                title="Mapa"
+                width="100%"
+                height="250"
+                src={getEmbedMapUrl(formData.gmaps_url)}
+                style={{ border: 0, borderRadius: 8 }}
+                loading="lazy"
+              />
+
+
+              <div style={{ marginTop: 8 }}>
+                <button
+                  className="link-btn"
+                  onClick={() => window.open(formData.gmaps_url, "_blank")}
+                >
+                  Abrir en Maps
+                </button>
+              </div>
+            </div>
+          )}
+
           <input
             disabled={!isEditing}
             value={formData.gmaps_url || ""}
             onChange={(e) => updateField("gmaps_url", e.target.value)}
           />
+
 
           <label>Dueño del Lead</label>
           <input

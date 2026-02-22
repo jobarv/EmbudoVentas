@@ -2,7 +2,9 @@
    VARIABLES Y RESET
    ========================================= */
 :root {
-  --bg-main: #0d28bf;
+  --bg-main:#242424;
+   /* #0d28bf; */
+  --background-modal: #162055;
   --column-bg: #ebedef;
   --card-bg: #ffffff;
   --primary: #0052cc;
@@ -359,7 +361,7 @@ select {
 .modal-body input:not(:disabled),
 .modal-body textarea:not(:disabled),
 .modal-body select:not(:disabled) {
-  background: white;
+  background: var(--background-modal);
   border: 1px solid #d1d5db;
 }
 
@@ -370,6 +372,11 @@ select {
   border: 1px solid #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
+.modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
 
 /* ===== BOTONES ===== */
 .add-project-btn {
